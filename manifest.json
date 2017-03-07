@@ -7,6 +7,6 @@
       "matches": [
         "https://www.facebook.com/*", "http://www.facebook.com/*"
       ],
-      "js": ["dimmer.js"]
+      "js": ["jquery-3.1.1.min.js", "dimmer.js"]
     }
   ]}
