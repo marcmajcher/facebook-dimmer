@@ -3,6 +3,12 @@
 (function() {
   'use strict';
 
+  var darkestBodyColor = {
+    r: 34,
+    g: 34,
+    b: 34
+  };
+
   var selectors = [
     'body',
     '._42ft',
@@ -37,13 +43,17 @@
     '#contentCol',
     '#rightCol'
   ];
+
   var originalColors = {};
   for (var i = 0; i < selectors.length; i++) {
-    originalColors[selectors[i]] = $(selectors[i]).css('background-color');
+    var color = $(selectors[i]).css('background-color');
+    var colors = color.match(/^rgba?\((\d+), ?(\d+), ?(\d+),? ?(\d+)?\)/);
+    originalColors[selectors[i]] = {
+      r: parseInt(colors[1]),
+      g: parseInt(colors[2]),
+      b: parseInt(colors[3])
+    };
   }
-  console.log(originalColors);
-
-  var darkestBodyColor = '#222222';
 
   function setColor() {
     $('.img').css('opacity', 0);
