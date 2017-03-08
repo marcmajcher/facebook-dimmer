@@ -1,19 +1,19 @@
 {
   "manifest_version": 2,
   "name": "Facebook Dimmer",
-  "version": "0.1",
+  "version": "0.1.1",
   "content_scripts": [{
     "matches": [
       "https://www.facebook.com/*", "http://www.facebook.com/*"
     ],
-    "js": ["timeme.min.js", "dimmer.js"]
+    "js": ["js/timeme.min.js", "js/dimmer.js"]
   }],
   "permissions": [
     "storage"
   ],
   "icons": {
-    "16": "icon16.png",
-    "48": "icon48.png",
-    "128": "icon128.png"
+    "16": "icon/icon16.png",
+    "48": "icon/icon48.png",
+    "128": "icon/icon128.png"
   }
 }
