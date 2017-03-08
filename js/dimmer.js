@@ -11,6 +11,8 @@
   var delay = 60 * 1000; // minutes
 
   window.onload = function() {
+    console.log('Facebook Dimmer loaded.');
+
     TimeMe.initialize({
       currentPageName: 'facebook-dimmer',
       idleTimeoutInSeconds: 60
@@ -31,6 +33,7 @@
 
   function setOpacity() {
     var idleTime = Math.max(0, maxActive - (idleString.split('1').length - 1));
+    console.log(idleTime + '/' + maxActive + ' minutes');
     document.querySelector('body').style.opacity = idleTime / maxActive;
   }
 
