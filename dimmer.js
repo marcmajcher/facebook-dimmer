@@ -25,7 +25,6 @@
         setInterval(fade, 1000);
       }
     });
-
   };
 
   function setOpacity() {
