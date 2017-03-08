@@ -1,18 +1,36 @@
 /* eslint-env jquery, browser */
-/* global TimeMe */
+/* global TimeMe, chrome */
 
 (function() {
   'use strict';
 
-  TimeMe.initialize({
-    currentPageName: 'facebook-dimmer',
-    idleTimeoutInSeconds: 300
-  });
-  TimeMe.startTimer();
-
   var lastTime = 0;
-  var timeWindow = 60;
+  var timeWindow = 15;
   var seconds = Array(timeWindow + 1).join('0');
+
+  window.onload = function() {
+    TimeMe.initialize({
+      currentPageName: 'facebook-dimmer',
+      idleTimeoutInSeconds: 300
+    });
+    TimeMe.startTimer();
+
+    chrome.storage.sync.get(null, function(items) {
+      if (items.idleSeconds) {
+        seconds = items.idleSeconds;
+        var secondsGone = Math.floor((new Date().getTime() - items.lastTime) / 1000);
+        seconds += Array(secondsGone + 1).join('0');
+        seconds = seconds.slice(-timeWindow);
+        setOpacity();
+        setInterval(fade, 1000);
+      }
+    });
+
+  };
+
+  function setOpacity() {
+    document.querySelector('body').style.opacity = (seconds.split('0').length - 1) / timeWindow;
+  }
 
   function fade() {
     var time = TimeMe.getTimeOnCurrentPageInSeconds();
@@ -27,20 +45,10 @@
     }
     lastTime = time;
 
-    var idleSeconds = seconds.split('0').length - 1;
-    console.log('Seconds idle in last minute:', idleSeconds);
-
-    document.querySelector('body').style.opacity = idleSeconds / timeWindow;
+    chrome.storage.sync.set({
+      idleSeconds: seconds,
+      lastTime: new Date().getTime()
+    });
+    setOpacity();
   }
-
-  setInterval(fade, 1000);
 })();
-
-// https://developer.chrome.com/extensions/storage#type-StorageArea
-// chrome.storage.sync.set({ "yourBody": "myBody" }, function(){
-//     //  A data saved callback omg so fancy
-// });
-//
-// chrome.storage.sync.get(/* String or Array */["yourBody"], function(items){
-//     //  items = [ { "yourBody": "myBody" } ]
-// });
