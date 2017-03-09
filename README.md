@@ -11,4 +11,4 @@ The extension is available on the Chrome extension store at https://chrome.googl
 ## TODO
 
 * Add user-customizable time windows and maximum allowed time within that window.
-* Allow the user to add more sited to the dimmer.
+* Allow the user to add more sites to the dimmer.
